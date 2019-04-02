@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: https://brianczy.org
+url: https://brianczy.github.io/
 date_format: "ordinal"
 title: 明智修身
 subtitle: "我所应该做的是从不间断的去探索这个世界!"
