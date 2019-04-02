@@ -1,6 +1,10 @@
-# Android Logger存储到本地-未生成日志文件
-
-
+---
+layout: post
+title: Android Logger存储到本地-未生成日志文件
+categories: Android
+description: 使用Logger时，不在本地生成日志文件的问题梳理
+keywords: Android, Logger, 日志
+---
 
 1、描述：
 
@@ -27,12 +31,9 @@ private void requsetStoragePermission() {
 
 1、分析Logger
 
- ![img](https://github.com/BrianCZY/MyBlogs/blob/gh-pages/image/2019-3-9-1.jpg?raw=true)
+ ![img](https://raw.githubusercontent.com/BrianCZY/BrianCZY.github.io/master/images/blog/Logger/2019-3-9-1.jpg)
 
 2、结论
 
 
 
-3、测试图片
-
- ![img](https://github.com/BrianCZY/MyBlogs/blob/gh-pages/image/2019-3-9-2.png?raw=true)
