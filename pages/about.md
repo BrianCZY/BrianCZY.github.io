@@ -1,18 +1,20 @@
 ---
 layout: page
 title: About
-description: 打码改变世界
-keywords: Zhuang Ma, 马壮
+description: 探索技术世界
+keywords: Brian chen, 陈振洋
 comments: true
 menu: 关于
 permalink: /about/
 ---
 
-我是马壮，码而生，码而立。
+我是Brian，对技术的敬仰
 
-仰慕「优雅编码的艺术」。
+对世界的向往，所要做的
 
-坚信熟能生巧，努力改变人生。
+便是勇往直前，发现更大
+
+的世界
 
 ## 联系
 
