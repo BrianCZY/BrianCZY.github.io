@@ -8,7 +8,9 @@ keywords: ctrl+shift+f, 热键，Android Studio
 ---
 
 最近在Android Studio的使用过程中，发现热键” ctrl + shift + f “偶尔失效，查找到两种方案来解决这个问题：
+
 1、使用Windows Hotkey Explorer 来查看所有的热键情况。这个方法对window10支持不好，找不出占用 ctrl + shift + f 程序，故解决不了我的问题。
+
 2、使用PChunter 查看每个进程的热键，这个需要手动查看每个进程的情况，比较耗时，依然找不到 ctrl + shift + f 的占用情况。
 
 最后，偶然发现的切换输入法时这个热键会生效，后来确定了搜狗输入法占用了这个热键，前往搜狗输入法的 工具箱-属性设置-按键-系统功能快捷键 取消对于的快捷键即可。
