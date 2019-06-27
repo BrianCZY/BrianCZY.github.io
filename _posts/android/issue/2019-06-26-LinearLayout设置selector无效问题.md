@@ -53,7 +53,11 @@ selector_item_bg.xml
 
 经测试，是由于selector 的第一个 item 没有设置state_pressed，修改的方式是添加 
 
+```xml
 <item android:state_pressed="false">
+```
+
+
 
 修改后的selector_item_bg.xml  如下：
 
