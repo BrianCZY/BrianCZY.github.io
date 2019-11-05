@@ -6,7 +6,7 @@ description: 使用Logger时，不在本地生成日志文件的问题梳理
 keywords: Android， 6.0， 源码，root
 ---
 
-
+<!--注：本文更新于2019-11-5-->
 
 本次修改的是MTK 6.0版本系统源码，已经测试可以实现app 获得root权限
 
@@ -147,7 +147,7 @@ sdcard/sdcard.c:49:#include <private/android_filesystem_config.h>
 （2）修改system/xbin/su 权限及分组
 
 ```shell
-vim system/core/include/private/android_filesystem_config.h   +201
+vim system/core/include/private/android_filesystem_config.h   +230
 ```
 
 具体修改为：
@@ -236,17 +236,98 @@ ubuntu@ubuntu-Pc:~/phone/mtk/kt109/alps/system/core$ cd init/
 
 
 
-6、编译源码
+
+
+6、User版本的修改需要修改下面两个文件，如果编译debug版本，那么可以跳过本步骤
+
+（1）修改mk，使得所有版本编译时也编译su
+
+```shell
+ vim system/extras/su/Android.mk
+```
+
+将 LOCAL_MODULE_TAGS := debug  修改为：
+
+LOCAL_MODULE_TAGS := optional
+
+```shell
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:= su.c
+
+LOCAL_MODULE:= su
+
+LOCAL_FORCE_STATIC_EXECUTABLE := true
+
+LOCAL_STATIC_LIBRARIES := libc
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+//LOCAL_MODULE_TAGS := debug
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_EXECUTABLE)
+
+
+```
+
+
+
+（2）添加su的编译目录
+
+```shell
+ vim build/target/product/core.mk
+```
+
+添加 ：su \
+
+修改后的文件如下:
+
+```shell
+PRODUCT_PACKAGES += \
+    su \
+    BasicDreams \
+    Browser \
+    Calculator \
+    Calendar \
+    CalendarProvider \
+    CaptivePortalLogin \
+    CertInstaller \
+    DeskClock \
+    DocumentsUI \
+    DownloadProviderUi \
+    ExternalStorageProvider \
+    FusedLocation \
+    InputDevices \
+    KeyChain \
+    Keyguard \
+    Launcher2 \
+    ManagedProvisioning \
+    PicoTts \
+    PacProcessor \
+    libpac \
+    PrintSpooler \
+    ProxyHandler \
+    Settings \
+    SharedStorageBackup \
+    Telecom \
+    TeleService \
+    VpnDialogs \
+    MmsService
+
+```
+
+7、编译源码
 
 ​		 source build/envsetup.sh
 
-​		 lunch   //并选择编译的版本，我选择的是userdebug 版本
+​		 lunch   //并选择编译的版本，我选择的是user 版本
 
 ​		make -j8 
 
-7、烧录到开发板上
+8、烧录到开发板上
 
-8、查看及测试权限
+9、查看及测试权限
 
 
 
@@ -255,51 +336,76 @@ ubuntu@ubuntu-Pc:~/phone/mtk/kt109/alps/system/core$ cd init/
 进入adb，执行 ls -l /system/xbin/su   ，从结果来看，su 属于root分组并且对于普通用户具有执行权限
 
 ```shell
-root@JTY:/ # ls -l /system/xbin/su
--rwsr-sr-x root     root       276592 2019-06-04 12:15 su
-root@JTY:/ #
+C:\Users\brian>adb shell
+shell@JTY:/ $ ls -l /system/xbin/su
+-rwsr-sr-x root     root       276504 2019-11-05 14:07 su
+shell@JTY:/ $
 ```
 
 
 
 （2）测试root权限
 
-进入adb ，运行一个app，并根据该包名搜索具体的进程信息。
+运行一个任意app, 进入adb ，并根据该包名搜索具体的进程信息。
+
+（下面以系统内置的浏览器为例 ，其包名为： com.android.browser）
 
 ```shell
-root@JTY:/ # ps | grep  com.kangear.printsample      		//查找进程
-u0_a49    2520  299   1652568 68944 ffffffff ad60baa4 S com.kangear.printsample
-root@JTY:/ # su u0_a49        //切换到app进程
-root@JTY:/ $ id
-uid=10049(u0_a49) gid=10049(u0_a49) groups=1003(graphics),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats) context=kernel
-root@JTY:/ $ su              //切换到su  
-root@JTY:/ #                 //出现这个就是具备root了
+C:\Users\brian>adb shell
+shell@JTY:/ $ ps | grep com.android.browser      //查找进程
+u0_a19    2540  310   1326428 48224 ffffffff 00000000 S com.android.browser
+shell@JTY:/ $ su u0_a19   //切换到app进程
+shell@JTY:/ $ id
+uid=10019(u0_a19) gid=10019(u0_a19) groups=1003(graphics),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats) context=kernel
+shell@JTY:/ $ su    //切换到su  
+shell@JTY:/ #        //出现这个就是具备root了
+
 ```
 
 若不具备root权限则可能会提示
 
 ```shell
-root@JTY:/ # su u0_a49
-root@JTY:/ $ su
+shell@JTY:/ $ su u0_a49
+shell@JTY:/ $su
 sh: su: can't execute: Permission denied
 ```
 
 
 
-9、总结
+10、总结
 
-一共需要修改以下文件
+编译debug、eng版本一共需要修改以下文件
+
+```shell
+（1）frameworks/base/cmds/app_process/app_main.cpp 
+
+（2）frameworks/base/core/jni/com_android_internal_os_Zygote.cpp 
+
+（3）system/core/include/private/android_filesystem_config.h 
+
+（4）system/extras/su/su.c
+
+（5）system/core/init/init.c 
+```
+
+
+
+编译user版本一共需要修改以下文件
 
 ```
 （1）frameworks/base/cmds/app_process/app_main.cpp 
 
-（2） frameworks/base/core/jni/com_android_internal_os_Zygote.cpp 
+（2）frameworks/base/core/jni/com_android_internal_os_Zygote.cpp 
 
-（3） system/core/include/private/android_filesystem_config.h 
+（3）system/core/include/private/android_filesystem_config.h 
 
 （4）system/extras/su/su.c
 
-（5） system/core/init/init.c 
+（5）system/core/init/init.c 
+
+（6）system/extras/su/Android.mk
+
+（7）build/target/product/core.mk
 ```
 
 
