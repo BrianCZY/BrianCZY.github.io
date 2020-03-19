@@ -8,6 +8,10 @@
 
 
 
+图片拷贝到 \BrianCZY.github.io\images\blog  目录上上传到GitHub上
+
+
+
 ###### 图片存储 
 
 https://raw.githubusercontent.com/BrianCZY/BrianCZY.github.io/master/images/blog/xxx/xxx.png
