@@ -2,7 +2,7 @@
 
 
 layout: post
-title: RecyclerView设置分割线记录
+title: Android USB模式通讯
 categories: Android
 description: Android USB host 模式通讯
 keywords: Android, USB, usb,host

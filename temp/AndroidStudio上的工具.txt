@@ -1,0 +1,7 @@
+1、QAPlug - FindBugs  插件
+	FindBugs module for QAPlug - an Intellij IDEA plugin to manage code
+	quality which integrates tools such as PMD, Checkstyle and Findbugs
+	
+2、SQLDelight 
+	SQLDelight 是著名的Kotlin多平台数据库之一。它通过SQL生成Kotlin APIs，进而根据架构本身来创建数据库。
+	
