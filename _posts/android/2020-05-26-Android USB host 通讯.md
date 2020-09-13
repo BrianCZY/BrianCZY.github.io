@@ -171,7 +171,7 @@ private fun openUsbDevice(device: UsbDevice) {
 开启协程接收端口的数据，注意这里的数据是在IO协程上，若要将数据显示到界面需要切换到主线程上，如withContext(Dispatchers.Main) 
 
 ```kotlin
-    //接收数据
+    //接收数据  数据的接收可以放到service中去
     private fun receiveUsbData(usbEpIn: UsbEndpoint) {
         val epMax = usbEpIn!!.maxPacketSize
         mReceiveJob = GlobalScope.launch(Dispatchers.IO) {

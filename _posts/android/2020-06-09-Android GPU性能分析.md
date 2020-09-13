@@ -9,7 +9,7 @@ keywords: Android, GPU, 渲染,性能
 
 设置-》开发者选项-》监控-》GPU呈现模式分析-》在屏幕上显示为条形图
 
-![image-20200609150532956](C:\Users\brian\AppData\Roaming\Typora\typora-user-images\image-20200609150532956.png)
+![image-20200609150532956](https://raw.githubusercontent.com/BrianCZY/BrianCZY.github.io/master/images/blog/gpu/image-20200609150532956.png)
 
 
 
@@ -19,11 +19,11 @@ keywords: Android, GPU, 渲染,性能
 
 
 
-![image-20200609160350122](C:\Users\brian\AppData\Roaming\Typora\typora-user-images\image-20200609160350122.png)
+![image-20200609160350122](https://raw.githubusercontent.com/BrianCZY/BrianCZY.github.io/master/images/blog/gpu/image-20200609160350122.png)
 
 
 
-![image-20200609192103834](C:\Users\brian\AppData\Roaming\Typora\typora-user-images\image-20200609192103834.png)
+![image-20200609192103834](https://raw.githubusercontent.com/BrianCZY/BrianCZY.github.io/master/images/blog/gpu/image-20200609192103834.png)
 
 
 
@@ -42,7 +42,7 @@ keywords: Android, GPU, 渲染,性能
 
 经分析发现，多了两个不需要的层级，如下图，去掉两个顶层层级即可提高GPU渲染性能
 
-![image-20200609160208003](C:\Users\brian\AppData\Roaming\Typora\typora-user-images\image-20200609160208003.png)
+![image-20200609160208003](https://raw.githubusercontent.com/BrianCZY/BrianCZY.github.io/master/images/blog/gpu/image-20200609160208003.png)
 
 
 
